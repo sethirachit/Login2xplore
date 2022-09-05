@@ -85,12 +85,30 @@ and open the template in the editor.
                         + "}";
                 return putRequest;
             }
+
+            function executeCommand(reqString, dbBaseUrl, apiEndPointUrl) {
+                var url = dbBaseUrl + apiEndPointUrl;
+                var jsonObj;
+                $.post(url, reqString, function (result) {
+                    jsonObj = JSON.parse(result);
+                }).fail(function (result) {
+                    var dataJsonObj = result.responseText;
+                    jsonObj = JSON.parse(dataJsonObj);
+                });
+                return jsonObj;
+            }
+            function resetForm() {
+                $("#empId").val("");
+                $("#empName").val("");
+                $("#empEmail").val("");
+                $("#empId").focus();
+            }
             function saveEmployee() {
                 var jsonStr = validateAndGetFormData();
                 if (jsonStr === "") {
                     return;
                 }
-                var putReqStr = createPUTRequest("90936861|-31948784479254024|90932362",
+                var putReqStr = createPUTRequest("90937370|-31949298367630558|90943286",
                         jsonStr, "SAMPLE", "EMP-REL");
                 alert(putReqStr);
                 jQuery.ajaxSetup({async: false});
